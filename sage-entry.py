@@ -3,7 +3,7 @@ import shutil
 import sys
 import os
 
-if "__name__" == "__main__":
+if __name__ == "__main__":
     subprocess.call(['conda', 'env', 'create', '-f', 'environment.yml'])
     subprocess.call(['source', 'activate', 'gaussian_grouping2'])
     data_dir = os.environ["SM_CHANNEL_TRAIN"]
