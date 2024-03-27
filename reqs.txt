@@ -3,7 +3,7 @@ torchvision==0.13.1
 torchaudio==0.12.1
 tqdm
 scipy
-opencv
+opencv-python
 scikit-learn
 plyfile==0.8.1
 lpips
