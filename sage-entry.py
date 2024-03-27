@@ -8,7 +8,9 @@ if __name__ == "__main__":
     # subprocess.call(['conda', 'create', '-n' 'gaussian_grouping', "python=3.8", '-y'])
     # subprocess.call(['conda', 'init', 'bash'])
     # subprocess.call(['conda', 'activate', 'gaussian_grouping'])
+    # subprocess.call(['yum', 'install', 'python3.8', '-y'])
     subprocess.call(['python', '-m', 'pip', 'install', '-r', 'reqs.txt'])
+    subprocess.call(['python', '-m', 'pip', 'install', 'submodules/diff-gaussian-rasterization', 'submodules/simple-knn'])
     print('Conda environment successfully configured')
     
     print('Moving dataset...')
