@@ -15,11 +15,11 @@ if __name__ == "__main__":
     data_dir = os.environ["SM_CHANNEL_TRAIN"]
     os.mkdir('./data')
     print("Datadir:", os.listdir(data_dir))
-    shutil.move(f'{data_dir}/train', './data')
+    shutil.move(f'{data_dir}', './data')
     print("Datadir:", os.listdir('./data'))
     print('Dataset successfully moved')
 
-    print(subprocess.run(["bash", "./script/train.sh", "mipnerf/kitchen", "2"]))
+    print(subprocess.run(["bash", "./script/train.sh", "train/mipnerf/kitchen", "2"]))
     shutil.move('./output', '/opt/ml/output/data')
     
 
