@@ -108,7 +108,7 @@ def render_set(model_path, name, iteration, views, gaussians, pipeline, backgrou
 
     out_path = os.path.join(render_path[:-8],'concat')
     makedirs(out_path,exist_ok=True)
-    fourcc = cv2.VideoWriter.fourcc(*'DIVX') 
+    fourcc = cv2.VideoWriter.fourcc(*'mp4v') 
     size = (gt.shape[-1]*5,gt.shape[-2])
     fps = float(5) if 'train' in out_path else float(1)
     writer = cv2.VideoWriter(os.path.join(out_path,'result.mp4'), fourcc, fps, size)
