@@ -1,0 +1,10 @@
+tqdm
+scipy
+opencv-python
+scikit-learn
+plyfile==0.8.1
+lpips
+wandb
+
+submodules/diff-gaussian-rasterization
+submodules/simple-knn

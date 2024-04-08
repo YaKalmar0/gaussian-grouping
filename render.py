@@ -85,12 +85,28 @@ def render_set(model_path, name, iteration, views, gaussians, pipeline, backgrou
     makedirs(gt_colormask_path, exist_ok=True)
     makedirs(pred_obj_path, exist_ok=True)
 
+    preds_list = []
+    entropies_list = []
     for idx, view in enumerate(tqdm(views, desc="Rendering progress")):
         results = render(view, gaussians, pipeline, background)
         rendering = results["render"]
         rendering_obj = results["render_object"]
-        
+
         logits = classifier(rendering_obj)
+        print('logits shape:', logits.shape)
+        print('rendering obj shape:', rendering_obj.shape)
+        preds = torch.softmax(logits.cpu(), dim=0)
+        max_pred = torch.max(preds)
+        preds_list.append(max_pred)
+        print('max pred:', max_pred)
+
+        # entropy = -torch.sum(preds * torch.log(preds + 1e-6))
+        entropy = torch.special.entr(preds)
+        print('entropy1 shape:', entropy.shape)
+        entropy = entropy.mean()
+        print('entropy:', entropy)
+        entropies_list.append(entropy)
+
         pred_obj = torch.argmax(logits,dim=0)
         pred_obj_mask = visualize_obj(pred_obj.cpu().numpy().astype(np.uint8))
         
@@ -105,6 +121,9 @@ def render_set(model_path, name, iteration, views, gaussians, pipeline, backgrou
         gt = view.original_image[0:3, :, :]
         torchvision.utils.save_image(rendering, os.path.join(render_path, '{0:05d}'.format(idx) + ".png"))
         torchvision.utils.save_image(gt, os.path.join(gts_path, '{0:05d}'.format(idx) + ".png"))
+    
+    print('Average max pred:', torch.stack(preds_list).mean())
+    print('Average entropy:', torch.stack(entropies_list).mean())
 
     out_path = os.path.join(render_path[:-8],'concat')
     makedirs(out_path,exist_ok=True)
