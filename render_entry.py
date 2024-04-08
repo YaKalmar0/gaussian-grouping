@@ -21,6 +21,3 @@ if __name__ == "__main__":
 
     print(subprocess.run(["python", "render.py", "-m", "output/lerf/ramen", "--num_classes", "256", "--images", "images"]))
     shutil.move('./output', '/opt/ml/output/data')
-    
-
-    
